@@ -1,0 +1,23 @@
+{
+  "Database": {
+    "ConnectionString": "Server=127.0.0.1;Port=2345;Database=torridb;User Id=test;Password=testpassword;"
+  },
+  "Serilog": {
+    "Using": [
+      "Torri.Tests"
+    ],
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft": "Information",
+        "Microsoft.AspNetCore": "Warning",
+        "System.Net.Http.HttpClient": "Warning"
+      }
+    },
+    "WriteTo": [
+      {
+        "Name": "TestSink"
+      }
+    ]
+  }
+}

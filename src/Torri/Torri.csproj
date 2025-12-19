@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.1"/>
+        <PackageReference Include="Mono.Nat" Version="3.0.4"/>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
+        <PackageReference Include="ReusableTasks" Version="4.0.0"/>
+        <PackageReference Include="Riok.Mapperly" Version="4.3.0" />
+        <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="10.0.1"/>
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.0.1"/>
+    </ItemGroup>
+
+    <PropertyGroup>
+        <EmitLegacyAssetsFileItems>True</EmitLegacyAssetsFileItems>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Content Include="..\.dockerignore">
+            <Link>.dockerignore</Link>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="MonoTorrent">
+            <HintPath>..\MonoTorrent\MonoTorrent.dll</HintPath>
+        </Reference>
+        <Reference Include="MonoTorrent.Client">
+            <HintPath>..\MonoTorrent\MonoTorrent.Client.dll</HintPath>
+        </Reference>
+        <Reference Include="MonoTorrent.PiecePicking">
+            <HintPath>..\MonoTorrent\MonoTorrent.PiecePicking.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+</Project>

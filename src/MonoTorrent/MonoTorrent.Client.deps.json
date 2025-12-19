@@ -1,0 +1,202 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "MonoTorrent.Client/1.0.0": {
+        "dependencies": {
+          "Mono.Nat": "3.0.0",
+          "MonoTorrent": "1.0.0",
+          "MonoTorrent.BEncoding": "1.0.0",
+          "MonoTorrent.Factories": "1.0.0",
+          "MonoTorrent.Messages": "1.0.0",
+          "MonoTorrent.PieceWriter": "1.0.0",
+          "ReusableTasks": "4.0.0"
+        },
+        "runtime": {
+          "MonoTorrent.Client.dll": {}
+        }
+      },
+      "Mono.Nat/3.0.0": {
+        "runtime": {
+          "lib/netstandard2.1/Mono.Nat.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.0.0"
+          }
+        }
+      },
+      "ReusableTasks/4.0.0": {
+        "runtime": {
+          "lib/net5.0/ReusableTasks.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "4.0.0.0"
+          }
+        }
+      },
+      "MonoTorrent/1.0.0": {
+        "dependencies": {
+          "MonoTorrent.BEncoding": "1.0.0",
+          "ReusableTasks": "4.0.0"
+        },
+        "runtime": {
+          "MonoTorrent.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "3.0.3.0"
+          }
+        }
+      },
+      "MonoTorrent.BEncoding/1.0.0": {
+        "runtime": {
+          "MonoTorrent.BEncoding.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "3.0.3.0"
+          }
+        }
+      },
+      "MonoTorrent.Factories/1.0.0": {
+        "runtime": {
+          "MonoTorrent.Factories.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "3.0.3.0"
+          }
+        }
+      },
+      "MonoTorrent.Messages/1.0.0": {
+        "dependencies": {
+          "MonoTorrent": "1.0.0"
+        },
+        "runtime": {
+          "MonoTorrent.Messages.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "3.0.3.0"
+          }
+        }
+      },
+      "MonoTorrent.PieceWriter/1.0.0": {
+        "dependencies": {
+          "MonoTorrent": "1.0.0"
+        },
+        "runtime": {
+          "MonoTorrent.PieceWriter.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "3.0.3.0"
+          }
+        }
+      },
+      "MonoTorrent.Dht/2.0.0.0": {
+        "runtime": {
+          "MonoTorrent.Dht.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "3.0.3.0"
+          }
+        }
+      },
+      "MonoTorrent.Connections/2.0.0.0": {
+        "runtime": {
+          "MonoTorrent.Connections.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "3.0.3.0"
+          }
+        }
+      },
+      "MonoTorrent.PiecePicking/2.0.0.0": {
+        "runtime": {
+          "MonoTorrent.PiecePicking.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "3.0.3.0"
+          }
+        }
+      },
+      "MonoTorrent.PortForwarding/2.0.0.0": {
+        "runtime": {
+          "MonoTorrent.PortForwarding.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "3.0.3.0"
+          }
+        }
+      },
+      "MonoTorrent.Trackers/2.0.0.0": {
+        "runtime": {
+          "MonoTorrent.Trackers.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "3.0.3.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MonoTorrent.Client/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Mono.Nat/3.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LgRC8/8plJfvr1nCPmyHNIwP4fs346doMA/UVDZvFN0RfGJdyD2uS7Dl1AydxjVLrIvad8ghozI0vYFWcfPeYQ==",
+      "path": "mono.nat/3.0.0",
+      "hashPath": "mono.nat.3.0.0.nupkg.sha512"
+    },
+    "ReusableTasks/4.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6EKzscjq+Q+uxD0N5GWUBO2N34cuDiJ08ZxRs1lqS0Hwvnjp6AgimUIX/8dqIxRZbPOG4gcikTMo+PM4D9CfaQ==",
+      "path": "reusabletasks/4.0.0",
+      "hashPath": "reusabletasks.4.0.0.nupkg.sha512"
+    },
+    "MonoTorrent/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MonoTorrent.BEncoding/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MonoTorrent.Factories/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MonoTorrent.Messages/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MonoTorrent.PieceWriter/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MonoTorrent.Dht/2.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MonoTorrent.Connections/2.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MonoTorrent.PiecePicking/2.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MonoTorrent.PortForwarding/2.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MonoTorrent.Trackers/2.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
