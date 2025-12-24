@@ -15,8 +15,7 @@ services:
   torri:
     depends_on:
       - torridb
-    build:
-      context: .
+    image: ghcr.io/ncoretorri/torri
     container_name: torri
     environment:
       - Torrent__LinkRoot=${TORRENT_DOWNLOAD_PATH}

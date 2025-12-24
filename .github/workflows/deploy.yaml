@@ -1,10 +1,14 @@
-name: Deploy to ghcr.io
+name: Deploy Torri backend
 
 on:
   workflow_dispatch:
     inputs:
       version:
         description: eg. 1.0.0
+        required: true
+
+      description:
+        description: What's new?
         required: true
 
 env:
@@ -15,11 +19,20 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+
+      - name: Publish Torri
+        run: |
+          dotnet publish "src/Torri/Torri.csproj" -c Release -o publish /p:UseAppHost=false /p:AssemblyVersion=${{ github.event.inputs.version }} /p:Version=${{ github.event.inputs.version }}
+
+      - name: Zip files
+        working-directory: publish
+        run: |
+          zip -r ../Torri-${{ github.event.inputs.version }}.zip .        
 
       - name: Log in to the Container registry
         uses: docker/login-action@v3
@@ -50,3 +63,14 @@ jobs:
               ref: 'refs/tags/v${{ github.event.inputs.version }}',
               sha: context.sha
             })
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Release ${{ github.event.inputs.version }}
+          tag_name: v${{ github.event.inputs.version }}
+          body: ${{ github.event.inputs.description }}
+          draft: false
+          prerelease: false
+          files: |
+            Torri-${{ github.event.inputs.version }}.zip
