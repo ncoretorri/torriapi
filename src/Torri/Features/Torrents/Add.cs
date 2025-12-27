@@ -41,7 +41,9 @@ public static partial class TorrentFeatures
             public string ExternalId { get; set; } = string.Empty;
             public string Title { get; set; } = null!;
             public int Year { get; set; }
+            // ReSharper disable once MemberHidesStaticFromOuterClass
             public bool Start { get; set; }
+            public bool AddToKodi { get; set; }
         }
 
         public class Response
@@ -82,6 +84,7 @@ public static partial class TorrentFeatures
             var hasError = false;
             var torrentEntity = new TorrentEntity
             {
+                AddToKodi = request.AddToKodi,
                 Hash = hash,
                 TorrentName = torrent.Name,
                 DisplayName = $"{request.Title} ({request.Year})",

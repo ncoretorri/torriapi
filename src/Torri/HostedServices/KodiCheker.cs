@@ -19,7 +19,7 @@ public class KodiCheker(ILogger<KodiCheker> logger, IServiceProvider serviceProv
         try
         {
             await using var scope = serviceProvider.CreateAsyncScope();
-            var torrentService = scope.ServiceProvider.GetRequiredService<ITorrentService>();
+            var torrentService = scope.ServiceProvider.GetRequiredService<IKodiCheckerService>();
             await torrentService.CheckAllAsync(CancellationToken.None);
         }
         catch (Exception ex)

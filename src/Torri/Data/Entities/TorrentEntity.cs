@@ -10,6 +10,8 @@ public class TorrentEntity
     [MaxLength(30)] public string ExternalId { get; set; } = string.Empty;
 
     [MaxLength(100)] public string Hash { get; set; } = string.Empty;
+    
+    public bool AddToKodi { get; set; }
 
     public bool IsProcessed { get; set; }
 

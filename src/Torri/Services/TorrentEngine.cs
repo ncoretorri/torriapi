@@ -17,14 +17,12 @@ public interface ITorrentEngine
     Task<string> AddTorrentAsync(Torrent torrent, bool start);
     Task SetContentWantedAsync(string hash, List<int> wanted, List<int> unWanted);
     Task RemoveTorrentAsync(string hash);
-    string GetTorrentName(string hash);
     Task StopAsync(string hash);
     Task StartAsync(string hash);
     Task PauseAsync(string hash);
     bool Exists(string hash);
     IEnumerable<T> ProjectTorrents<T>(Func<TorrentManager, T> projection);
     T ProjectTorrent<T>(string hash, Func<TorrentManager, T> projection);
-    IEnumerable<ITorrentManagerFile> QueryTorrentContents(string hash);
     IEnumerable<(ITorrentManagerFile file, int index)> QueryVideoContents(string hash);
     MonoSettings GetUserSettings();
     Task UpdateSettingsAsync(MonoSettings userSettings);
@@ -110,18 +108,12 @@ public class TorrentEngine(
         return projection(manager);
     }
 
-    public IEnumerable<ITorrentManagerFile> QueryTorrentContents(string hash)
-    {
-        var manager = GetByHash(hash);
-        return manager.Files;
-    }
-
     public bool IsSingleFileTorrent(string hash)
     {
         var manager = GetByHash(hash);
-        return manager.Files.Count == 1;
+        return IsSingleFileTorrent(manager);
     }
-
+    
     public IEnumerable<(ITorrentManagerFile file, int index)> QueryVideoContents(string hash)
     {
         var manager = GetByHash(hash);
@@ -139,9 +131,24 @@ public class TorrentEngine(
     public async Task RemoveTorrentAsync(string hash)
     {
         var manager = GetByHash(hash);
+        var isSingleFileTorrent = IsSingleFileTorrent(manager);
         await manager.StopAsync();
         await _engine.RemoveAsync(manager, RemoveMode.CacheDataAndDownloadedData);
         await _engine.SaveStateAsync(EngineStateFile);
+
+        // Some more cleanup        
+        if (isSingleFileTorrent)
+        {
+            var downloadPath = Path.Combine(options.Value.DownloadsDirectory, manager.Files[0].Path);
+            if (File.Exists(downloadPath))
+                File.Delete(downloadPath);
+        }
+        else
+        {
+            var downloadPath = Path.Combine(options.Value.DownloadsDirectory, manager.Name);
+            if (Directory.Exists(downloadPath))
+                Directory.Delete(downloadPath, true);
+        }
     }
 
     public async Task SetContentWantedAsync(string hash, List<int> wanted, List<int> unWanted)
@@ -176,12 +183,6 @@ public class TorrentEngine(
         return manager.PauseAsync();
     }
     
-    public string GetTorrentName(string hash)
-    {
-        var manager = GetByHash(hash);
-        return manager.Name;
-    }
-
     public bool Exists(string hash)
     {
         return _engine.Torrents.Any(x => x.InfoHashes.V1OrV2.ToHex() == hash);
@@ -191,6 +192,11 @@ public class TorrentEngine(
     {
         var manager = _engine.Torrents.First(x => x.InfoHashes.V1OrV2.ToHex() == hash);
         return manager;
+    }
+    
+    private bool IsSingleFileTorrent(TorrentManager manager)
+    {
+        return manager.Files.Count == 1;
     }
 
     private EngineSettingsBuilder GetDefaultSettingsBuilder()

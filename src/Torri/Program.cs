@@ -36,7 +36,7 @@ builder.Services.AddDbContext<TorriContext>((sp, options) =>
 builder.Services.AddSingleton<IFileService, FileService>();
 builder.Services.AddSingleton<IKodiService, KodiService>();
 builder.Services.AddSingleton<ITorrentEngine, TorrentEngine>();
-builder.Services.AddScoped<ITorrentService, TorrentService>();
+builder.Services.AddScoped<IKodiCheckerService, KodiCheckerService>();
 
 builder.Services.AddHttpClient<IMovieDatabase, TheMovieDatabaseService>(x =>
 {

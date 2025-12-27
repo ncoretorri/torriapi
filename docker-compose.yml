@@ -8,8 +8,8 @@ services:
       POSTGRES_USER: torri
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: torridb
-    #ports:
-    #  - "5432:5432"
+    ports:
+      - ${DATABASE_PORT}:5432
     restart: unless-stopped
 
   torri:
@@ -19,7 +19,7 @@ services:
     container_name: torri
     environment:
       - Torrent__LinkRoot=${TORRENT_DOWNLOAD_PATH}
-      - Database__ConnectionString=Server=torridb;Port=5432;Database=torridb;User Id=torri;Password=${DB_PASSWORD};
+      - Database__ConnectionString=Server=torridb;Port=${DATABASE_PORT};Database=torridb;User Id=torri;Password=${DB_PASSWORD};
     volumes:
       - '${TORRENT_APP_DATA_PATH}:/app/data'
       - '${TORRENT_APP_CACHE_PATH}:/app/cache'
@@ -29,5 +29,5 @@ services:
     ports:
       - ${TORRENT_PORT}:51413
       - ${TORRENT_PORT}:51413/udp
-      #- "5000:5000"
+      - ${BACKEND_PORT}:5000
     restart: unless-stopped

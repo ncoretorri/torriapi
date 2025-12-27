@@ -27,12 +27,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Content Include="..\.dockerignore">
-            <Link>.dockerignore</Link>
-        </Content>
-    </ItemGroup>
-
-    <ItemGroup>
         <Reference Include="MonoTorrent">
             <HintPath>..\MonoTorrent\MonoTorrent.dll</HintPath>
         </Reference>

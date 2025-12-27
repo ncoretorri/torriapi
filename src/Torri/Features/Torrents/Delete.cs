@@ -15,9 +15,9 @@ public static partial class TorrentFeatures
             TorriContext context,
             IFileService fileService,
             ITorrentEngine torrentEngine,
+            IKodiService kodiService,
             CancellationToken cancellationToken)
         {
-            var name = torrentEngine.GetTorrentName(hash);
             await torrentEngine.RemoveTorrentAsync(hash);
 
             var torrent = await context.Torrents
@@ -25,13 +25,16 @@ public static partial class TorrentFeatures
                 .Select(x => new TorrentEntity
                 {
                     TorrentType = x.TorrentType,
-                    DisplayName = x.DisplayName
+                    DisplayName = x.DisplayName,
+                    TorrentName = x.TorrentName,
+                    AddToKodi = x.AddToKodi
                 })
                 .FirstOrDefaultAsync(cancellationToken);
 
             if (torrent != null)
             {
-                fileService.DeleteTorrentFiles(torrent.TorrentType, torrent.DisplayName, name);
+                if (torrent.AddToKodi)
+                    kodiService.DeleteVideFilesFromKodi(torrent.TorrentType, torrent.DisplayName);
 
                 await context.Torrents
                     .Where(x => x.Hash == hash)

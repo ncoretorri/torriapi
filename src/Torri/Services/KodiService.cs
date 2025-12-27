@@ -10,19 +10,21 @@ public interface IKodiService
 {
     (int season, string filename) ProcessFileName(List<SerieMask> masks, string fileName);
 
-    bool AddToKodi(TorrentType type, string kodiName, string filePath, string downloadPath,
+    bool AddFileToKodi(TorrentType type, string kodiName, string filePath, string downloadPath,
         List<SerieMask> serieMasks);
+
+    void DeleteVideFilesFromKodi(TorrentType torrentType, string kodiName);
 }
 
 public class KodiService(
     IFileService fileService,
     IOptions<TorrentOptions> options) : IKodiService
 {
-    public bool AddToKodi(TorrentType type, string kodiName, string filePath, string downloadPath,
+    public bool AddFileToKodi(TorrentType type, string kodiName, string filePath, string downloadPath,
         List<SerieMask> serieMasks)
     {
         var name = fileService.RemoveForbiddenCharacters(kodiName);
-        string? linkPath = null;
+        string? linkPath;
 
         switch (type)
         {
@@ -47,17 +49,30 @@ public class KodiService(
                 linkPath = Path.Combine(seasonDirectory, data.filename);
                 break;
             }
+            
+            default:
+                return false;
         }
 
-        if (linkPath != null)
+        if (!File.Exists(linkPath))
+            File.CreateSymbolicLink(linkPath, downloadPath);
+
+        return true;
+    }
+    
+    public void DeleteVideFilesFromKodi(TorrentType torrentType, string kodiName)
+    {
+        var name = fileService.RemoveForbiddenCharacters(kodiName);
+
+        var kodiDirectory = torrentType switch
         {
-            if (!File.Exists(linkPath))
-                File.CreateSymbolicLink(linkPath, downloadPath);
+            TorrentType.Movie => Path.Combine(options.Value.MoviesDirectory, name),
+            TorrentType.Serie => Path.Combine(options.Value.SeriesDirectory, name),
+            _ => null
+        };
 
-            return true;
-        }
-
-        return false;
+        if (kodiDirectory != null && Directory.Exists(kodiDirectory))
+            Directory.Delete(kodiDirectory, true);
     }
 
     public (int season, string filename) ProcessFileName(List<SerieMask> masks, string fileName)

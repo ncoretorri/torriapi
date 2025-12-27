@@ -8,23 +8,23 @@ using Torri.Models;
 
 namespace Torri.Services;
 
-public interface ITorrentService
+public interface IKodiCheckerService
 {
     Task CheckAllAsync(CancellationToken cancellationToken);
 }
 
-public class TorrentService(
+public class KodiCheckerService(
     IOptions<TorrentOptions> options,
     ITorrentEngine torrentEngine,
     IKodiService kodiService,
     TorriContext context,
-    ILogger<TorrentService> logger)
-    : ITorrentService
+    ILogger<KodiCheckerService> logger)
+    : IKodiCheckerService
 {
     public async Task CheckAllAsync(CancellationToken cancellationToken)
     {
         var torrents = await context.Torrents
-            .Where(x => !x.IsProcessed)
+            .Where(x => x.AddToKodi && !x.IsProcessed)
             .Where(x => x.TorrentType != TorrentType.Serie || !x.HasMissingRegex)
             .Select(x => new TorrentEntity
             {
@@ -106,7 +106,7 @@ public class TorrentService(
                 ? Path.Combine(options.Value.LinkRoot, file.Path)
                 : Path.Combine(options.Value.LinkRoot, torrent.TorrentName, file.Path);
             
-            if (kodiService.AddToKodi(torrent.TorrentType, torrent.DisplayName, file.Path, downloadPath, serieMasks))
+            if (kodiService.AddFileToKodi(torrent.TorrentType, torrent.DisplayName, file.Path, downloadPath, serieMasks))
             {
                 logger.LogInformation("Added file {Path} to Kodi", file.Path);
                 filesAddedToKodi.Add(file.Id);

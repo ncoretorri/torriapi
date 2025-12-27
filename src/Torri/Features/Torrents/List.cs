@@ -24,6 +24,7 @@ public static partial class TorrentFeatures
             public string TorrentType { get; set; } = string.Empty;
             public bool IsProcessed { get; set; }
             public bool HasError { get; set; }
+            public bool AddToKodi { get; set; }
         }
         
         public static async Task<Ok<List<Response>>> Endpoint(
@@ -35,6 +36,7 @@ public static partial class TorrentFeatures
                 .OrderByDescending(x => x.Id)
                 .Select(x => new Response
                 {
+                    AddToKodi = x.AddToKodi,
                     ExternalId = x.ExternalId,
                     DisplayName = x.DisplayName,
                     TorrentName = x.TorrentName,
